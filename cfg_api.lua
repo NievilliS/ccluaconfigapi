@@ -2,6 +2,7 @@
 * Config API Ver 1.0
 * Created by Nievillis on Github, Discord and YouTube
 * The contents are free to be modified and used with no warranty.
+* Content and testing files are openly available at https://github.com/NievilliS/ccluaconfigapi.git
 --]]
 
 
