@@ -1,5 +1,5 @@
 --[[
-* Config API Ver 1.0
+* Config API Ver 1.0.1
 * Created by Nievillis on Github, Discord and YouTube
 * The contents are free to be modified and used with no warranty.
 * Content and testing files are openly available at https://github.com/NievilliS/ccluaconfigapi.git
@@ -302,6 +302,13 @@ _G.generic_save_config_table = _G.generic_save_config_table or function(_table, 
 		end
 	end
 	
+	--!! Close tables if one is still in stack. This is not required, but it may cause problem if appending to a config file with an unclosed table.concat
+	while #_track_scope_stack > 0 do
+		local _pr_sc = _track_scope_stack[#_track_scope_stack]:gsub("%%%.$","")
+		_track_scope_stack[#_track_scope_stack] = nil
+		_sv_str = _sv_str .. __get_indent(_pr_sc) .. "t@" .. _pr_sc:match("[^.]*$") .. ": } --> " .. _track_scope_stack[#_track_scope_stack]:gsub("%%%.$","") .. " >\n\n"
+	end
+	
 	--! Write to file if path is not nil
 	if _path then
 		local _file = fs.open(_path, _append and "a" or "w")
@@ -311,4 +318,3 @@ _G.generic_save_config_table = _G.generic_save_config_table or function(_table, 
 	
 	return _sv_str
 end
-
